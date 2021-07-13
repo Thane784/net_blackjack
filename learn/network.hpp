@@ -4,18 +4,19 @@
 #include <iostream>
 
 class Network{
-private:
+protected:
+	double m_line{0.5};
 	double m_speed;
-	static inline std::map<int,double> m_coeffs;
-	int sum{0};
-	std::map<int,bool> moves;
-	std::map<int,double> read_coeffs();
-	void write_coeffs();
+	std::map<int,double> m_coeffs;
+private:
+	std::map<int,double> read_coeffs() const;
+	void write_coeffs() const;
 public:
-	Network(double speed);
-	virtual ~Network(){write_coeffs();};
-	int move(int card);
-	void result(bool result);
-	void clear();
+    Network(){};
+	Network(double speed,double line);
+	double get_speed() const {return(m_speed);}
+	std::map<int,double> get_coeffs() const {return(m_coeffs);}
+	virtual ~Network(){write_coeffs();}
+	void result(std::pair<int,bool> move,bool result);
 	friend std::ostream& operator<<( std::ostream& out,const Network& net);
 };
