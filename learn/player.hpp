@@ -12,5 +12,6 @@ public:
 	Player(const Network& network,int sum);
 	bool move();
 	void plus(int number){m_sum+=number;}
-	int get_sum(){return(m_sum);};
+	int get_sum() const{return(m_sum);}
+	std::vector<int> get_stops() const{return(m_stops);}
 };
