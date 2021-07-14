@@ -11,7 +11,7 @@ void Network::write_coeffs() const{
 
 std::map<int,double> Network::read_coeffs() const{
 	std::map<int,double> coeffs{};
-	for(int i{2};i<21;++i)
+	for(int i{2};i<22;++i)
 		coeffs.insert(std::make_pair(i,0.5));
 	return(coeffs);
 }

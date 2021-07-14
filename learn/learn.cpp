@@ -29,12 +29,13 @@ void game_end(Network& network,std::array<Player,2> nets,int game_result=-1){
 }
 
 
-const double learn_line{0.5};
-const double learn_speed{0.01};
-const int learn_number{1};
+const double learn_line{0.1};
+const double learn_speed{0.001};
+const int learn_number{10};
 int main(){
 	Network network{learn_speed,learn_line};
 	for(int i{0};i<learn_number;++i){
+		std::cout << "\n\n\n";
 		Deck deck;
 		std::array<Player,2> nets{
 			Player{network,(deck.get_card()+deck.get_card())},
@@ -42,25 +43,37 @@ int main(){
 		};
 		bool net_number{0};
 		while (true){
-			auto net = nets[net_number];
-			bool resolution = net.move();
+			std::cout << "SUM "<< net_number << " " <<nets[net_number].get_sum() << "\n";
+			bool resolution =nets[net_number].move();
+			int pause{0};
+			std::cout << resolution << " " <<nets[net_number].get_sum() << "\n";
 			if(resolution){
+				pause = 0;
 				int card = deck.get_card();
-				if(net.get_sum()+card>21){
-					network.result(std::make_pair(net.get_sum(),true),false);
+				std::cout << card << " card\n";
+				if(nets[net_number].get_sum()+card>21){
+					network.result(std::make_pair(nets[net_number].get_sum(),true),false);
 					game_end(network,nets,!net_number);
+					break;
 				}
 				else{
-					net.plus(card);
-					network.result(std::make_pair(net.get_sum(),true),true);
+					network.result(std::make_pair(nets[net_number].get_sum(),true),true);
+					nets[net_number].plus(card);
 				}
 			}
 			else{
-				//TODO
+				if(pause>1){
+					game_end(network,nets);
+					break;
+				}
+				else{
+					nets[net_number].append_stop();
+				}
+				++pause;
 			}
-			//std::cout << card << " " << key;
 			net_number = !net_number;
 		}
+		std::cout << network;
 	}
 	getch();
 	return(0);

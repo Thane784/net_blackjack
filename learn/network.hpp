@@ -5,7 +5,7 @@
 
 class Network{
 protected:
-	double m_line{0.5};
+	double m_line;
 	double m_speed;
 	std::map<int,double> m_coeffs;
 private:

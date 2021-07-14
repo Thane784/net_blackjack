@@ -10,6 +10,7 @@ bool Player::move(){
 
 
 Player::Player(const Network& network, int sum):m_sum(sum){
+	std::cout << " Player" << "\n";
 	m_speed = network.get_speed();
 	m_coeffs = network.get_coeffs();
 }
