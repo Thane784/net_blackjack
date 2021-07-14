@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <iostream>
 #include <vector>
+#include <ctime>
 
 #include "player.hpp"
 #include "deck.hpp"
@@ -29,11 +30,12 @@ void game_end(Network& network,std::array<Player,2> nets,int game_result=-1){
 }
 
 
-const double learn_line{0.1};
+const double learn_line{0.5};
 const double learn_speed{0.001};
-const int learn_number{10};
+const int learn_number{1000};
 int main(){
 	Network network{learn_speed,learn_line};
+	const unsigned int start_time =  std::clock();
 	for(int i{0};i<learn_number;++i){
 		std::cout << "\n\n\n";
 		Deck deck;
@@ -43,14 +45,11 @@ int main(){
 		};
 		bool net_number{0};
 		while (true){
-			std::cout << "SUM "<< net_number << " " <<nets[net_number].get_sum() << "\n";
 			bool resolution =nets[net_number].move();
 			int pause{0};
-			std::cout << resolution << " " <<nets[net_number].get_sum() << "\n";
 			if(resolution){
 				pause = 0;
 				int card = deck.get_card();
-				std::cout << card << " card\n";
 				if(nets[net_number].get_sum()+card>21){
 					network.result(std::make_pair(nets[net_number].get_sum(),true),false);
 					game_end(network,nets,!net_number);
@@ -73,8 +72,11 @@ int main(){
 			}
 			net_number = !net_number;
 		}
-		std::cout << network;
 	}
+	const unsigned int end_time =  std::clock();
+	std::cout << "learn_number = " << learn_number << "\n";
+	std::cout << "runtime = " << (end_time-start_time)/1000.0 << " seconds\n";
+	std::cout << network;
 	getch();
 	return(0);
 }

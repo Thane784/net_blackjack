@@ -12,7 +12,7 @@ public:
 	Player(){};
 	Player(const Network& network,int sum);
 	bool move();
-	void plus(int number){m_sum+=number;std::cout << "plus" << m_sum << "\n";}
+	void plus(int number){m_sum+=number;}
 	int get_sum() const{return(m_sum);}
 	std::vector<int> get_stops() const{return(m_stops);}
 	void append_stop(){m_stops.push_back(m_sum);}
