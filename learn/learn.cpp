@@ -48,7 +48,7 @@ int main(){
 		bool net_number{0};
 		int pause{0};
 		while (true){
-			bool resolution =nets[net_number].move();
+			bool resolution = nets[net_number].move();
 			if(resolution){
 				pause = 0;
 				int card = deck.get_card();

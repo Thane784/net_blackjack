@@ -8,8 +8,11 @@ Network::Network(double speed,double line):m_speed(speed),m_line(line){
 void Network::write_coeffs() const{
 	std::ofstream outfile("coeffs.txt", std::ios::trunc);
 	if (!outfile){
-		std::cerr << "coeffs.txt could not be opened!" << std::endl;
-		std::exit(1);
+		std::ofstream outfile("learn\\coeffs.txt");
+		if (!outfile){
+			std::cerr << "coeffs.txt could not be opened!" << std::endl;
+			std::exit(1);
+		}
 	}
 	for (auto pair : m_coeffs){
 		outfile << pair.first << std::endl;
@@ -21,8 +24,11 @@ std::map<int,double> Network::read_coeffs() const{
 	std::map<int,double> coeffs{};
 	std::ifstream infile("coeffs.txt");
 	if (!infile){
-		std::cerr << "coeffs.txt could not be opened!" << std::endl;
-		std::exit(1);
+		std::ifstream infile("learn\\coeffs.txt");
+		if (!infile){
+			std::cerr << "coeffs.txt could not be opened!" << std::endl;
+			std::exit(1);
+		}
 	}
 	while (infile){
 		std::string first_str, second_str;
