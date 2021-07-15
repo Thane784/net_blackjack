@@ -32,21 +32,23 @@ void game_end(Network& network,std::array<Player,2> nets,int game_result=-1){
 
 const double learn_line{0.5};
 const double learn_speed{0.001};
-const int learn_number{1000};
+const int learn_number{300'000};
 int main(){
 	Network network{learn_speed,learn_line};
+	std::cout << network << "\n\n\n";
 	const unsigned int start_time =  std::clock();
 	for(int i{0};i<learn_number;++i){
-		std::cout << "\n\n\n";
+		if(i%1000==0)
+			std::cout << i << "\n";
 		Deck deck;
 		std::array<Player,2> nets{
 			Player{network,(deck.get_card()+deck.get_card())},
 			Player{network,(deck.get_card()+deck.get_card())}
 		};
 		bool net_number{0};
+		int pause{0};
 		while (true){
 			bool resolution =nets[net_number].move();
-			int pause{0};
 			if(resolution){
 				pause = 0;
 				int card = deck.get_card();
@@ -73,6 +75,7 @@ int main(){
 			net_number = !net_number;
 		}
 	}
+	network.write_coeffs();
 	const unsigned int end_time =  std::clock();
 	std::cout << "learn_number = " << learn_number << "\n";
 	std::cout << "runtime = " << (end_time-start_time)/1000.0 << " seconds\n";
