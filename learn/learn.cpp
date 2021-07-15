@@ -42,8 +42,8 @@ int main(){
 			std::cout << i << "\n";
 		Deck deck;
 		std::array<Player,2> nets{
-			Player{network,(deck.get_card()+deck.get_card())},
-			Player{network,(deck.get_card()+deck.get_card())}
+			Player{network,deck.get_card(),deck.get_card()},
+			Player{network,deck.get_card(),deck.get_card()}
 		};
 		bool net_number{0};
 		int pause{0};
